@@ -1,0 +1,90 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    ListNode th = null;
+    ListNode tt = null;
+    public ListNode reverse(ListNode head){
+        if(head==null)return head;
+        
+        //ListNode dummy = new ListNode(-1);
+        ListNode prev = null;
+        
+        while(head!=null){
+             
+            ListNode forw = head.next;
+            head.next=prev;
+            prev=head;
+            head=forw;
+          
+           
+        }
+        
+        return prev;
+    }
+    public int length(ListNode head){
+        int count=0;
+        while(head!=null){
+            head=head.next;
+            count++;
+        }
+       
+        return count;
+    }
+   public void  addFirstNode(ListNode node){
+        if(th == null){
+            th=node;
+            tt=node;
+        }
+       else{
+        node.next=th;
+        th=node;
+       }
+    }
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(head==null || head.next==null || k==1)return head;
+        ListNode oh = null;
+        ListNode ot = null;
+        ListNode curr = head;
+        int count=k;
+        //int len = length(head); 
+        while(curr!=null){
+        while(k-->0 && curr!=null){
+            ListNode forw = curr.next;
+            curr.next=null;
+            addFirstNode(curr);
+            curr=forw;
+        }
+        if(oh==null){
+            oh=th;
+            ot=tt;
+        }
+            
+        else if(k>=0){
+            ListNode th1 = reverse(th);
+            ot.next=th1;
+            while(ot.next!=null){
+                ot=ot.next;
+            }
+        }
+        else{
+            ot.next=th;
+            ot=tt;
+            
+        }
+        th=null;
+        tt=null;
+        k=count;
+        //len-=k;
+        }
+        ot.next=curr;
+        return oh;
+    }
+}
